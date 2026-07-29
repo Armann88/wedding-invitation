@@ -7,6 +7,7 @@ import Line1 from "../public/images/Line1.png";
 import { Great_Vibes, Noto_Serif_Armenian } from "next/font/google";
 import localFont from "next/font/local";
 
+
 const ArmenianDecorativeUnicode = localFont({
   src: "./fonts/ArmenianDecorativeUnicode.ttf",
 });
@@ -20,6 +21,7 @@ const NotSerifArmenian = Noto_Serif_Armenian({
 });
 
 export default function Home() {
+ const audioRef = useRef<HTMLAudioElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [guestsCount, setGuestsCount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ export default function Home() {
 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ["start -33%", "end end"],
+    offset: ["start 30%", "end end"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -43,6 +45,19 @@ export default function Home() {
   });
 
   const [progressValue, setProgressValue] = useState(0);
+
+
+useEffect(() => {
+  const startMusic = () => {
+    audioRef.current?.play().catch(console.error);
+  };
+
+  window.addEventListener("click", startMusic, { once: true });
+
+  return () => {
+    window.removeEventListener("click", startMusic);
+  };
+}, []);
   useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (progress) => {
       setProgressValue(progress);
@@ -203,19 +218,19 @@ export default function Home() {
             </p>
           </div>
         </header>
-        <div className="relative w-full h-[auto]">
+        <div className="relative w-full h-[auto]" >
           {/* BACKGROUND */}
           <Image
             src="/images/Background.png"
             alt="Background"
             width={430}
             height={1900}
-            className="absolute top-0 left-0 w-full h-[3150px] z-0"
+            className="absolute top-0 left-0 w-full h-full z-0"
           />
 
           {/* CONTENT ON BACKGROUND */}
           <div
-            ref={timelineRef}
+       
             className="relative z-10 flex flex-col items-center"
           >
             {/* GROUP */}
@@ -236,7 +251,10 @@ export default function Home() {
             </p>
 
             {/* SVG */}
-<div className="flex items-center justify-center w-full h-[1080px] overflow-hidden">
+<div
+  ref={timelineRef}
+  className="flex items-center justify-center w-full h-[1000px] overflow-hidden"
+>
               <div
                 className={`${NotSerifArmenian.className} text-center text-[#272727]`}
               >
@@ -588,14 +606,15 @@ export default function Home() {
     text-[18px]
     italic
     text-[#272727]
-    mt-[100px]
+    mt-[80px]
+    mb-[50px]
   `}
               >
                 <p className="w-[45px] text-center">{timeLeft.days} օր</p>
 
                 <p className="w-[55px] text-center">{timeLeft.hours} ժամ</p>
 
-                <p className="w-[70px] text-center">{timeLeft.minutes} րոպե</p>
+                <p className="w-[55px] text-center">{timeLeft.minutes} րոպե</p>
 
                 <p className="w-[90px] text-center">
                   {timeLeft.seconds} վայրկյան
@@ -605,6 +624,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+<audio ref={audioRef} loop>
+  <source src="/music/wedding.mp3" type="audio/mpeg" />
+</audio>
     </main>
   );
 }
