@@ -58,25 +58,23 @@ useEffect(() => {
     window.removeEventListener("click", startMusic);
   };
 }, []);
-  useEffect(() => {
-    const unsubscribe = smoothProgress.on("change", (progress) => {
-      setProgressValue(progress);
+useEffect(() => {
+  const unsubscribe = smoothProgress.on("change", (progress) => {
+    if (!pathRef.current) return;
 
-      if (!pathRef.current) return;
+    const path = pathRef.current;
+    const length = path.getTotalLength();
 
-      const path = pathRef.current;
-      const length = path.getTotalLength();
+    const point = path.getPointAtLength(progress * length);
 
-      const point = path.getPointAtLength(progress * length);
-
-      setHeartPosition({
-        x: point.x + 150,
-        y: point.y,
-      });
+    setHeartPosition({
+      x: point.x,
+      y: point.y,
     });
+  });
 
-    return () => unsubscribe();
-  }, [smoothProgress]);
+  return () => unsubscribe();
+}, [smoothProgress]);
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -283,29 +281,35 @@ useEffect(() => {
               </div>
 
               <div className="relative w-full">
-                <div
-                  className={`
-     ${NotSerifArmenian.className}
-      absolute
-      top-[-25px]
-      left-0
-      w-full
-      flex
-      justify-center
-      gap-8
-      text-[#787777]
-      text-[35px]
-      z-10
+<div
+  className={`
+    ${NotSerifArmenian.className}
+    absolute
+    ml-[-8px]
+    top-[10px]
+    left-0
+    w-full
+    flex
+    justify-center
+    items-center
+    text-[#787777]
+    text-[35px]
   `}
-                >
-                  <span>13</span>
-                  <span>14</span>
-                  <span>15</span>
-                  <span>16</span>
-                  <span>17</span>
-                </div>
+>
+  <div className="flex gap-8">
+    <span>13</span>
+    <span>14</span>
+  </div>
+
+  <div className="mx-[50px]"></div>
+
+  <div className="flex gap-8">
+    <span>16</span>
+    <span>17</span>
+  </div>
+</div>
                 <svg
-                  className="relative z-50 w-[220px] h-full overflow-visible"
+                  className="relative z-50 w-[160px] h-full overflow-visible"
                   viewBox="0 -80 430 1780"
                 >
                   <g transform="translate(150 0)">
@@ -319,14 +323,13 @@ useEffect(() => {
                     />
                   </g>
 
-                  <image
-                    href="/images/Heart.png"
-                    width="127"
-                    height="115"
-                    x={progressValue < 0.01 ? 155 : heartPosition.x + -60}
-                    y={progressValue < 0.01 ? -120 : heartPosition.y - 60}
-                    className="relative z-50"
-                  />
+                 <image
+  href="/images/Heart.png"
+  width="127"
+  height="115"
+  x={heartPosition.x + 85}
+  y={heartPosition.y - 55}
+/>
                 </svg>
               </div>
               <div>
@@ -387,210 +390,311 @@ useEffect(() => {
                 height={280}
               />
 
-              <form
-                onSubmit={handleSubmit}
-                className={`${ArmenianDecorativeUnicode.className} text-[18px] italic text-[#272727] mt-[100px]`}
-              >
-                <div style={{ marginBottom: "15px" }}>
-                  <label htmlFor="firstName">Անուն</label>
-                  <br />
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    placeholder="Մուտքագրեք անունը"
-                    required
-                    className="
-    w-full
-    bg-transparent
-    border-0
-    border-b
-    border-[#272727]
-    outline-none
-    focus:border-[#272727]
-    px-0
-    py-2
-    placeholder:text-gray-400
-  "
-                  />
-                </div>
+            <form
+  onSubmit={handleSubmit}
+  className={`${ArmenianDecorativeUnicode.className} text-[18px] italic text-[#272727] mt-[100px]`}
+>
 
-                <div style={{ marginBottom: "15px" }}>
-                  <label htmlFor="lastName">Ազգանուն</label>
-                  <br />
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Մուտքագրեք Ազգանուն"
-                    required
-                    className="
-    w-full
-    bg-transparent
-    border-0
-    border-b
-    border-[#272727]
-    outline-none
-    focus:border-[#272727]
-    px-0
-    py-2
-    placeholder:text-gray-400
-  "
-                  />
-                </div>
+  {/* Անուն */}
+  <div className="mb-[15px]">
+    <label htmlFor="firstName">Անուն</label>
+    <br />
 
-                <fieldset className="mb-6">
-                  <legend className="text-[#272727] mb-3">Ո՞ր կողմից եք</legend>
+    <input
+      id="firstName"
+      name="firstName"
+      type="text"
+      placeholder="Մուտքագրեք անունը"
+      required
+      className="
+        w-full
+        bg-transparent
+        border-0
+        border-b
+        border-[#272727]
+        outline-none
+        focus:border-[#272727]
+        px-0
+        py-2
+        placeholder:text-gray-400
+      "
+    />
+  </div>
 
-                  <label className="flex items-center gap-3 cursor-pointer mb-3">
-                    <input
-                      type="radio"
-                      name="side"
-                      value="Հարսի կողմից"
-                      required
-                      className="peer hidden"
-                    />
 
-                    <span
-                      className="
-        w-4
-        h-4
-        rounded-full
+  {/* Ազգանուն */}
+  <div className="mb-[15px]">
+    <label htmlFor="lastName">Ազգանուն</label>
+    <br />
+
+    <input
+      id="lastName"
+      name="lastName"
+      type="text"
+      placeholder="Մուտքագրեք Ազգանուն"
+      required
+      className="
+        w-full
+        bg-transparent
+        border-0
+        border-b
+        border-[#272727]
+        outline-none
+        focus:border-[#272727]
+        px-0
+        py-2
+        placeholder:text-gray-400
+      "
+    />
+  </div>
+
+
+  {/* Կողմ */}
+  <fieldset className="mb-6">
+
+    <legend className="text-[#272727] mb-3">
+      Ո՞ր կողմից եք
+    </legend>
+
+
+    <label className="flex items-center gap-3 cursor-pointer mb-3">
+
+      <input
+        type="radio"
+        name="side"
+        value="Հարսի կողմից"
+        required
+        className="peer hidden"
+      />
+
+      <span
+        className="
+          w-4
+          h-4
+          rounded-full
+          border
+          border-[#272727]
+          flex
+          items-center
+          justify-center
+          peer-checked:bg-[#272727]
+        "
+      />
+
+      <span>
+        Հարսի կողմից
+      </span>
+
+    </label>
+
+
+
+    <label className="flex items-center gap-3 cursor-pointer">
+
+      <input
+        type="radio"
+        name="side"
+        value="Փեսայի կողմից"
+        className="peer hidden"
+      />
+
+      <span
+        className="
+          w-4
+          h-4
+          rounded-full
+          border
+          border-[#272727]
+          flex
+          items-center
+          justify-center
+          peer-checked:bg-[#272727]
+        "
+      />
+
+      <span>
+        Փեսայի կողմից
+      </span>
+
+    </label>
+
+  </fieldset>
+
+
+
+  {/* Հյուրերի քանակ */}
+  <div className="mb-6 relative">
+
+    <label className="block mb-2">
+      Հյուրերի քանակ
+    </label>
+
+
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className="
+        border-b
+        border-[#272727]
+        pb-2
+        flex
+        justify-between
+        cursor-pointer
+      "
+    >
+
+      <span>
+        {guestsCount || "Ընտրեք քանակը"}
+      </span>
+
+
+      <span
+        className={`transition duration-300 ${
+          isOpen ? "rotate-180" : ""
+        }`}
+      >
+        ▼
+      </span>
+
+    </div>
+
+
+
+    <div
+      className={`
+        absolute
+        left-0
+        right-0
+        mt-2
+        bg-white
+        rounded-xl
+        shadow-xl
+        overflow-hidden
+        z-50
+        transition-all
+        duration-300
+        ${
+          isOpen
+          ? "opacity-100 max-h-[200px]"
+          : "opacity-0 max-h-0 pointer-events-none"
+        }
+      `}
+    >
+
+      {Array.from({length:10},(_,i)=>(
+
+        <div
+          key={i}
+          onClick={()=>{
+            setGuestsCount(String(i+1))
+            setIsOpen(false)
+          }}
+          className="
+            h-12
+            flex
+            flex-col
+            items-center
+            justify-center
+            cursor-pointer
+            hover:bg-[#f8f2f2]
+          "
+        >
+
+          <span>
+            {i+1}
+          </span>
+
+
+          <div className="w-10 h-[1px] bg-[#272727] mt-1"/>
+
+        </div>
+
+      ))}
+
+
+    </div>
+
+  </div>
+
+
+
+
+  {/* Լրացուցիչ տեղեկություն */}
+  <div className="mb-6">
+
+    <label
+      htmlFor="additionalInfo"
+      className={`${ArmenianDecorativeUnicode.className} block text-[18px] italic text-[#272727] tracking-wide`}
+    >
+      Լրացուցիչ տեղեկություն
+    </label>
+
+
+    <textarea
+      id="additionalInfo"
+      name="additionalInfo"
+      rows={4}
+      placeholder="Ցանկության դեպքում կարող եք գրել Ձեր ցանկությունները կամ նշումները..."
+      className="
+        w-full
+        bg-transparent
+        border-0
+        border-b
+        border-[#B8A7A7]
+        pb-2
+        text-[#272727]
+        text-[17px]
+        placeholder:text-[#B8A7A7]
+        outline-none
+        resize-none
+        transition-all
+        duration-300
+        focus:border-[#272727]
+        focus:scale-[1.01]
+      "
+    />
+
+  </div>
+
+
+
+
+  {/* Button */}
+  <div className="w-full flex justify-center mt-8">
+
+    <button
+      type="submit"
+      disabled={loading}
+      className="
+        w-[150px]
+        h-[50px]
         border
         border-[#272727]
-        flex
-        items-center
-        justify-center
-        peer-checked:bg-[#272727]
-      "
-                    ></span>
-
-                    <span className="text-[#272727]">Հարսի կողմից</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="side"
-                      value="Փեսայի կողմից"
-                      className="peer hidden"
-                    />
-
-                    <span
-                      className="
-        w-4
-        h-4
         rounded-full
-        border
-        border-[#272727]
+        text-[#272727]
         flex
-        items-center
-        justify-center
-        peer-checked:bg-[#272727]
-      "
-                    ></span>
-
-                    <span className="text-[#272727]">Փեսայի կողմից</span>
-                  </label>
-                </fieldset>
-
-                <div className="mb-6 relative">
-                  <label className="block mb-2">Հյուրերի քանակ</label>
-
-                  <div
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="border-b border-[#272727] pb-2 flex justify-between cursor-pointer"
-                  >
-                    <span>{guestsCount || "Ընտրեք քանակը"}</span>
-
-                    <span
-                      className={`transition duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    >
-                      ▼
-                    </span>
-                  </div>
-
-                  <div
-                    className={`
-    absolute
-    left-0
-    right-0
-    mt-2
-    h-[200px]
-    bg-white
-    rounded-xl
-    shadow-xl
-    overflow-y-auto
-    z-50
-    origin-top
-    transition-all
-    duration-300
-    ${
-      isOpen
-        ? "opacity-100 scale-y-100 max-h-[200px]"
-        : "opacity-0 scale-y-0 max-h-0 pointer-events-none"
-    }
-  `}
-                  >
-                    {Array.from({ length: 10 }, (_, i) => (
-                      <div
-                        key={i}
-                        onClick={() => {
-                          setGuestsCount(String(i + 1));
-                          setIsOpen(false);
-                        }}
-                        className="
-        h-12
-        flex
-        flex-col
         items-center
         justify-center
         cursor-pointer
-        hover:bg-[#f8f2f2]
         transition-all
-        duration-200
+        duration-300
+        hover:bg-[#272727]
+        hover:text-white
       "
-                      >
-                        <span className="text-[#272727]">{i + 1}</span>
+    >
 
-                        <div className="w-10 h-[1px] bg-[#272727] mt-1"></div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+      {loading ? "Ուղարկվում է..." : "Ուղարկել"}
 
-                <div className="w-full flex justify-center mt-8">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="
-      w-[150px]
-      h-[50px]
-      border
-      border-[#272727]
-      rounded-full
-      text-[#272727]
-      flex
-      items-center
-      justify-center
-      cursor-pointer
-      transition-all
-      duration-300
-      hover:bg-[#272727]
-      hover:text-white
-    "
-                  >
-                    {loading ? "Ուղարկվում է..." : "Ուղարկել"}
-                  </button>
-                </div>
-              </form>
+    </button>
+
+  </div>
+
+
+</form>
               {message && (
                 <p
                   style={{
                     marginTop: "20px",
-                    color: "green",
+                    color: "[#272727]",
                     fontWeight: "bold",
                   }}
                 >
