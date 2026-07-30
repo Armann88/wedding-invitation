@@ -217,27 +217,17 @@ useEffect(() => {
             </p>
           </div>
         </header>
-        <div className="relative w-full min-h-[1900px] overflow-hidden">
-          {/* BACKGROUND */}
-       <Image
-  src="/images/Background.png"
-  alt="Background"
-  width={430}
-  height={1900}
-  className="
-    absolute
-    top-0
-    left-0
-    w-full
-    h-full
-    object-cover
-    z-0
-    pointer-events-none
-  "
-/>
+        <div className="relative w-full">
 
-          {/* CONTENT ON BACKGROUND */}
-         <div className="relative z-10 flex flex-col items-center">
+  <Image
+    src="/images/Background.png"
+    alt="Background"
+    width={430}
+    height={1900}
+    className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
+  />
+
+  <div className="relative z-10 flex flex-col items-center">
             {/* GROUP */}
             <Image
               src="/images/Group.png"
@@ -258,7 +248,7 @@ useEffect(() => {
             {/* SVG */}
 <div
   ref={timelineRef}
-  className="flex items-center justify-center w-full h-[1000px] overflow-hidden"
+  className="relative flex items-center justify-center w-full h-[1000px] overflow-hidden"
 >
               <div
                 className={`${NotSerifArmenian.className} text-center text-[#272727]`}
@@ -315,10 +305,10 @@ useEffect(() => {
     <span>17</span>
   </div>
 </div>
-                <svg
-                  className="relative z-50 w-[160px] h-full overflow-visible"
-                  viewBox="0 -80 430 1780"
-                >
+              <svg
+  className="relative z-50 w-[160px] h-[650px] overflow-visible"
+  viewBox="0 -80 430 1780"
+>
                   <g transform="translate(150 0)">
                     <path
                       ref={pathRef}
