@@ -46,27 +46,19 @@ export default function Home() {
 
   const [progressValue, setProgressValue] = useState(0);
 
-useEffect(() => {
-  const startMusic = async () => {
-    if (!audioRef.current) return;
+const [musicOn, setMusicOn] = useState(false);
 
-    try {
-      audioRef.current.volume = 0.5;
-      await audioRef.current.play();
-      console.log("Music started");
-    } catch (error) {
-      console.log("Music blocked", error);
-    }
-  };
+function startMusic() {
+  if (!audioRef.current) return;
 
-  window.addEventListener("touchstart", startMusic, { once: true });
-  window.addEventListener("pointerdown", startMusic, { once: true });
+  audioRef.current.volume = 0.5;
 
-  return () => {
-    window.removeEventListener("touchstart", startMusic);
-    window.removeEventListener("pointerdown", startMusic);
-  };
-}, []);
+  audioRef.current.play()
+    .then(() => {
+      setMusicOn(true);
+    })
+    .catch(console.log);
+}
 useEffect(() => {
   const unsubscribe = smoothProgress.on("change", (progress) => {
     if (!pathRef.current) return;
@@ -225,21 +217,27 @@ useEffect(() => {
             </p>
           </div>
         </header>
-        <div className="relative w-full h-[auto]" >
+        <div className="relative w-full min-h-[1900px] overflow-hidden">
           {/* BACKGROUND */}
-          <Image
-            src="/images/Background.png"
-            alt="Background"
-            width={430}
-            height={1900}
-            className="absolute top-0 left-0 w-full h-full z-0"
-          />
+       <Image
+  src="/images/Background.png"
+  alt="Background"
+  width={430}
+  height={1900}
+  className="
+    absolute
+    top-0
+    left-0
+    w-full
+    h-full
+    object-cover
+    z-0
+    pointer-events-none
+  "
+/>
 
           {/* CONTENT ON BACKGROUND */}
-          <div
-       
-            className="relative z-10 flex flex-col items-center"
-          >
+         <div className="relative z-10 flex flex-col items-center">
             {/* GROUP */}
             <Image
               src="/images/Group.png"
@@ -737,7 +735,26 @@ useEffect(() => {
           </div>
         </div>
       </div>
-<audio ref={audioRef} loop preload="auto">
+      {!musicOn && (
+  <button
+    onClick={startMusic}
+    className="
+      fixed
+      top-6
+      right-6
+      z-[999]
+      w-12
+      h-12
+      rounded-full
+      border
+      border-[#272727]
+      bg-[#272727]
+    "
+  >
+    🎵
+  </button>
+)}
+<audio ref={audioRef} loop playsInline>
   <source src="/music/wedding.mp3" type="audio/mpeg" />
 </audio>
     </main>
