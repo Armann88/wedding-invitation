@@ -28,6 +28,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const timelineRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
+  
 
   const [heartPosition, setHeartPosition] = useState({
     x: 55,
@@ -47,7 +48,19 @@ export default function Home() {
   const [progressValue, setProgressValue] = useState(0);
 
 const [musicOn, setMusicOn] = useState(false);
+const startMusicFromPage = () => {
+  if (!audioRef.current || musicOn) return;
 
+  audioRef.current
+    .play()
+    .then(() => {
+      audioRef.current!.volume = 0.5;
+      setMusicOn(true);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 function startMusic() {
   if (!audioRef.current) return;
 
@@ -75,7 +88,21 @@ useEffect(() => {
   });
 
   return () => unsubscribe();
+  
 }, [smoothProgress]);
+useEffect(() => {
+  const handleInteraction = () => {
+    startMusicFromPage();
+  };
+
+  document.addEventListener("touchstart", handleInteraction, { once: true });
+  document.addEventListener("click", handleInteraction, { once: true });
+
+  return () => {
+    document.removeEventListener("touchstart", handleInteraction);
+    document.removeEventListener("click", handleInteraction);
+  };
+}, [musicOn]);
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
