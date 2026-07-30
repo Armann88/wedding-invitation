@@ -224,7 +224,16 @@ useEffect(() => {
     alt="Background"
     width={430}
     height={1900}
-    className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
+    className="
+  absolute
+  top-0
+  left-0
+  w-full
+  h-full
+  z-0
+  pointer-events-none
+  will-change-transform
+"
   />
 
   <div className="relative z-10 flex flex-col items-center">
@@ -248,7 +257,16 @@ useEffect(() => {
             {/* SVG */}
 <div
   ref={timelineRef}
-  className="relative flex items-center justify-center w-full h-[1000px] overflow-hidden"
+  className="
+    relative
+    flex
+    items-center
+    justify-center
+    w-full
+    h-[1000px]
+    overflow-hidden
+    transform-gpu
+  "
 >
               <div
                 className={`${NotSerifArmenian.className} text-center text-[#272727]`}
@@ -640,7 +658,7 @@ useEffect(() => {
         pb-2
         text-[#272727]
         text-[17px]
-        placeholder:text-[#B8A7A7]
+         placeholder:text-gray-400
         outline-none
         resize-none
         transition-all
