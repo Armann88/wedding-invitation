@@ -599,26 +599,26 @@ useEffect(() => {
 
 
 
-    <div
-      className={`
-        absolute
-        left-0
-        right-0
-        mt-2
-        bg-white
-        rounded-xl
-        shadow-xl
-        overflow-hidden
-        z-50
-        transition-all
-        duration-300
-        ${
-          isOpen
-          ? "opacity-100 max-h-[200px]"
-          : "opacity-0 max-h-0 pointer-events-none"
-        }
-      `}
-    >
+   <div
+  className={`
+    absolute
+    left-0
+    right-0
+    mt-2
+    bg-white
+    rounded-xl
+    shadow-xl
+    overflow-y-auto
+    z-50
+    transition-all
+    duration-300
+    ${
+      isOpen
+        ? "opacity-100 max-h-[200px]"
+        : "opacity-0 max-h-0 pointer-events-none"
+    }
+  `}
+>
 
       {Array.from({length:10},(_,i)=>(
 
