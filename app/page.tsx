@@ -247,22 +247,11 @@ useEffect(() => {
         <div className="relative w-full">
 
 <div className="absolute inset-0  z-0">
-    <Image
-    src="/images/Background.png"
-    alt="Background"
-    width={430}
-    height={1900}
-    className="
-  absolute
-  top-0
-  left-0
-  w-full
-  h-full
-  z-0
-  pointer-events-none
-  will-change-transform
-"
-  />
+<img
+  src="/images/Background.png"
+  alt="Background"
+  className="absolute top-0 left-0 w-full h-auto z-0 pointer-events-none"
+/>
 </div>
 
   <div className="relative z-10 flex flex-col items-center">
@@ -420,9 +409,9 @@ useEffect(() => {
                 />
               </div>
             </div>
-            <div className="flex flex-col items-center mt-[550px]">
+            <div className="flex flex-col items-center mt-[550px] text-[#272727]">
               <p
-                className={`${ArmenianDecorativeUnicode.className} text-[28px] mb-[20px] italic text-[#272727]`}
+                className={`${ArmenianDecorativeUnicode.className} text-[#272727] text-[28px] mb-[20px] italic`}
               >
                 Սիրով կսպասենք Ձեզ
               </p>
@@ -500,7 +489,34 @@ useEffect(() => {
       Ո՞ր կողմից եք
     </legend>
 
+ <label className="flex items-center gap-3 cursor-pointer">
 
+      <input
+        type="radio"
+        name="side"
+        value="Փեսայի կողմից"
+        className="peer hidden"
+      />
+
+      <span
+        className="
+          w-4
+          h-4
+          rounded-full
+          border
+          border-[#272727]
+          flex
+          items-center
+          justify-center
+          peer-checked:bg-[#272727]
+        "
+      />
+
+      <span>
+        Փեսայի կողմից
+      </span>
+
+    </label>
     <label className="flex items-center gap-3 cursor-pointer mb-3">
 
       <input
@@ -533,34 +549,7 @@ useEffect(() => {
 
 
 
-    <label className="flex items-center gap-3 cursor-pointer">
-
-      <input
-        type="radio"
-        name="side"
-        value="Փեսայի կողմից"
-        className="peer hidden"
-      />
-
-      <span
-        className="
-          w-4
-          h-4
-          rounded-full
-          border
-          border-[#272727]
-          flex
-          items-center
-          justify-center
-          peer-checked:bg-[#272727]
-        "
-      />
-
-      <span>
-        Փեսայի կողմից
-      </span>
-
-    </label>
+   
 
   </fieldset>
 
