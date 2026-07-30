@@ -256,7 +256,7 @@ useEffect(() => {
 <img
   src="/images/Background.png"
   alt="Background"
-  className="absolute top-450 left-0 w-full h-[1580px] z-0 pointer-events-none"
+  className="absolute top-450 left-0 w-full h-[1620px] z-0 pointer-events-none"
   
 />
 </div>
