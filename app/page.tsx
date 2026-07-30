@@ -30,7 +30,7 @@ export default function Home() {
   const pathRef = useRef<SVGPathElement>(null);
 
   const [heartPosition, setHeartPosition] = useState({
-    x: 215,
+    x: 55,
     y: 0,
   });
 
@@ -46,16 +46,25 @@ export default function Home() {
 
   const [progressValue, setProgressValue] = useState(0);
 
-
 useEffect(() => {
-  const startMusic = () => {
-    audioRef.current?.play().catch(console.error);
+  const startMusic = async () => {
+    if (!audioRef.current) return;
+
+    try {
+      audioRef.current.volume = 0.5;
+      await audioRef.current.play();
+      console.log("Music started");
+    } catch (error) {
+      console.log("Music blocked", error);
+    }
   };
 
-  window.addEventListener("click", startMusic, { once: true });
+  window.addEventListener("touchstart", startMusic, { once: true });
+  window.addEventListener("pointerdown", startMusic, { once: true });
 
   return () => {
-    window.removeEventListener("click", startMusic);
+    window.removeEventListener("touchstart", startMusic);
+    window.removeEventListener("pointerdown", startMusic);
   };
 }, []);
 useEffect(() => {
@@ -728,7 +737,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-<audio ref={audioRef} loop>
+<audio ref={audioRef} loop preload="auto">
   <source src="/music/wedding.mp3" type="audio/mpeg" />
 </audio>
     </main>
