@@ -244,13 +244,20 @@ useEffect(() => {
             </p>
           </div>
         </header>
-        <div className="relative w-full">
+        <div className="relative w-full ">
 
 <div className="absolute inset-0  z-0">
 <img
   src="/images/Background.png"
   alt="Background"
   className="absolute top-0 left-0 w-full h-auto z-0 pointer-events-none"
+  
+/>
+<img
+  src="/images/Background.png"
+  alt="Background"
+  className="absolute top-450 left-0 w-full h-[1580px] z-0 pointer-events-none"
+  
 />
 </div>
 
