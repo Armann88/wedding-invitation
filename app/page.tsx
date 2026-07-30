@@ -278,7 +278,7 @@ useEffect(() => {
             {/* AUGUST */}
             <p
               className={`${NotSerifArmenian.className}
-      text-[#272727] text-[30px] font-normal mt-[50px] mb-[60px]`}
+      text-[#272727] text-[30px] font-normal mt-[40px] `}
             >
               Օգոստոս 2026
             </p>
