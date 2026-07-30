@@ -246,7 +246,24 @@ useEffect(() => {
         </header>
         <div className="relative w-full">
 
-<div className="absolute inset-0 bg-red-200 z-0"></div>
+<div className="absolute inset-0  z-0">
+    <Image
+    src="/images/Background.png"
+    alt="Background"
+    width={430}
+    height={1900}
+    className="
+  absolute
+  top-0
+  left-0
+  w-full
+  h-full
+  z-0
+  pointer-events-none
+  will-change-transform
+"
+  />
+</div>
 
   <div className="relative z-10 flex flex-col items-center">
             {/* GROUP */}
