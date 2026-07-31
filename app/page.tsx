@@ -309,7 +309,7 @@ useEffect(() => {
                 <div
                   className={`${NotSerifArmenian.className} text-center text-[#272727] translate-y-[40px] translate-x-[35px]`}
                 >
-                  <p className="text-[30px] font-semibold">13:30</p>
+                  <p className="text-[30px] font-semibold">13:00</p>
 
                   <p className="text-[17px] font-[400]">Պսակադրություն</p>
 
